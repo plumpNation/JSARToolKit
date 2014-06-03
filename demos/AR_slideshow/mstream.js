@@ -25,21 +25,7 @@ video = createVideo(document, {
 });
 
 video.style.display = 'none';
-
-/*
-navigator.getUserMedia = ( navigator.getUserMedia ||
-                       navigator.webkitGetUserMedia ||
-                       navigator.mozGetUserMedia ||
-                       navigator.msGetUserMedia);
-
-navigator.webkitGetUserMedia({'video': true},
-    function (stream) {
-        var url = webkitURL.createObjectURL(stream);
-        video.src = url;
-    },
-    function (error) { alert('you got no WebRTC webcam'); }
-);*/
-
+// attachWebcamTo(video);
 video.src = 'swap_loop.ogg';
 
 window.onload = function () {

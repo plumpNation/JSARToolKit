@@ -1,17 +1,26 @@
 threshold = 50;
 DEBUG = false;
+var xhr = new XMLHttpRequest;
+xhr.open("GET", "photos2.xml", false);
 photos = [];
-
-getPhotos('photos2.xml', function () {
+xhr.addEventListener('load', function(){
     var ps = this.responseText.match(/http:\/\/[a-z0-9_\/\.]+_m.jpg/g).sort().unique()
         .map(function(u){ return u.replace(/m\.jpg$/, "z.jpg") });
-
     photos = ps
         .map(function(u){ return u.replace(/.*\/([^\/]+)$/, "$1") })
         .map(Image.load);
-});
+}, false);
+xhr.send(null);
 
-var video = createVideo(document, 'swap_loop.ogg');
+var video = document.createElement('video');
+video.width = 640;
+video.height = 480;
+video.loop = true;
+video.volume = 0;
+video.autoplay = true;
+video.style.display = 'none';
+video.controls = true;
+video.src = "swap_loop.ogg";
 
 window.onload = function() {
     byId('loading').style.display = 'none';
@@ -89,7 +98,6 @@ window.onload = function() {
 
         var t = new Date();
         var detected = detector.detectMarkerLite(raster, threshold);
-        console.log(detected);
 
         for (var idx = 0; idx<detected; idx++) {
             var id = detector.getIdMarkerData(idx);
